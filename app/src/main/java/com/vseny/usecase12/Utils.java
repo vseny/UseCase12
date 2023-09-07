@@ -6,11 +6,26 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Utility class for advanced working with strings
+ */
 public class Utils {
 
     private static final int INDEX_NOT_FOUND = -1;
     private static final String EMPTY = "";
 
+    /**
+     * Truncates the specified string to first space after the lower parameter
+     * or to upper index if spaces after lower parameter was not found.
+     * Also adds string, that is given as last parameter, to the end of result string.
+     * If the specified string was empty, then function returns empty string without additional processing.
+     * @param str string for truncation
+     * @param lower index from which spaces will be searched
+     * @param upper maximum index for truncation, will be used in case of no spaces after lower index
+     * @param appendToEnd string to append to the end of the result string
+     * @return processed string
+     * @exception IllegalArgumentException if upper value cannot is less than -1 or lower value
+     */
     public static String abbreviate(final String str, int lower, int upper, final String appendToEnd) {
         isTrue(upper >= -1, "upper value cannot be less than -1");
         isTrue(upper >= lower || upper == -1, "upper value is less than lower value");
@@ -41,6 +56,13 @@ public class Utils {
         return result.toString();
     }
 
+    /**
+     * Returns initials from the given string with delimiters from arguments.
+     * WARNING! Space is not considered as delimiters if it is not in the delimiters vararg.
+     * @param str string for initials search
+     * @param delimiters delimiters which will be used for initials search
+     * @return string of initials
+     */
     public static String initials(final String str, final char... delimiters) {
         if (isEmpty(str)) {
             return str;
@@ -68,6 +90,11 @@ public class Utils {
         return new String(newCodePoints, 0, count);
     }
 
+    /**
+     * Swaps case of each character in the given string.
+     * @param str string to swap cases
+     * @return given string with swapped cases
+     */
     public static String swapCase(final String str) {
         if (isEmpty(str)) {
             return str;
@@ -99,6 +126,15 @@ public class Utils {
         return new String(newCodePoints, 0, outOffset);
     }
 
+    /**
+     * Wraps given string with given interval and specific string.
+     * @param str string for wrapping
+     * @param wrapLength interval used for wrapping if wrapping of long words is on
+     * @param newLineStr string which is used as wrapper
+     * @param wrapLongWords if 'true' will insert new line string using wrap length as interval
+     * @param wrapOn given string will be replaced with new line string
+     * @return wrapped string
+     */
     public static String wrap(final String str,
                               int wrapLength,
                               String newLineStr,
